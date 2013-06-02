@@ -1,0 +1,30 @@
+<dl class="portlet portletSearch portletContentFilterPortlet"
+    i18n:domain="wcc.search">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+            <tal:title replace="view/data/portlet_title"/>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem">
+        <form id="searchform">
+            <input class="searchField"
+                name="contentFilterSearchableText"
+                type="text"
+                size="15"
+                tal:attributes="placeholder view/data/placeholder_text;
+                value request/contentFilterSearchableText|nothing;
+                action context/absolute_url" />
+            <input class="searchButton"
+                value="Search"
+                type="submit"/>
+        </form>
+    </dd>
+
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+
+</dl>

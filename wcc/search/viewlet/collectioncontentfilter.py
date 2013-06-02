@@ -6,6 +6,8 @@ from Products.CMFCore.interfaces import IContentish
 from plone.app.layout.viewlets import interfaces as manager
 from wcc.search.interfaces import IProductSpecific
 from Products.ATContentTypes.interfaces.topic import IATTopic
+from Products.statusmessages.interfaces import IStatusMessage
+from wcc.search import MessageFactory as _
 grok.templatedir('templates')
 
 class CollectionContentFilter(grok.Viewlet):
@@ -17,9 +19,14 @@ class CollectionContentFilter(grok.Viewlet):
         return True
 
     def render(self):
-        if self.request.get('contentFilterSearchableText', ''):
+        searchableText = self.request.get('contentFilterSearchableText', '')
+        if searchableText:
             contentFilter = dict(self.request.get('contentFilter', {}))
-            contentFilter['SearchableText'] = self.request.get(
-                    'contentFilterSearchableText', '')
+            contentFilter['SearchableText'] = searchableText
             self.request.set('contentFilter', contentFilter)
+            IStatusMessage(self.request).add(_(
+                u'search_results_notification',
+                default=u'Displaying search results for "${searchableText}"',
+                mapping={'searchableText': searchableText}
+            ))
         return ''
