@@ -19,7 +19,7 @@ class CollectionContentFilter(grok.Viewlet):
         return True
 
     def render(self):
-        searchableText = self.request.get('contentFilterSearchableText', '')
+        searchableText = self.request.get('contentFilterSearchableText','')
         if searchableText:
             contentFilter = dict(self.request.get('contentFilter', {}))
             contentFilter['SearchableText'] = searchableText
@@ -27,6 +27,6 @@ class CollectionContentFilter(grok.Viewlet):
             IStatusMessage(self.request).add(_(
                 u'search_results_notification',
                 default=u'Displaying search results for "${searchableText}"',
-                mapping={'searchableText': searchableText}
+                mapping={'searchableText': searchableText.decode('utf-8')}
             ))
         return ''
